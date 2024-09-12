@@ -9,6 +9,7 @@ const cors = require('cors');
 const creationofmdiController = require('./routes/creationOfMDIRoutes');
 const mdiDrawingsController = require('./routes/mdiDrawingsRoutes');
 const notificationOfMDIController = require('./routes/notificationsOfMDIRoutes');
+const mdiApprovalRoutes = require('./routes/mdiApprovalRoutes');
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use(express.json());
 app.use('/api/mdi', creationofmdiController);
 app.use('/api/mdiDrawings', mdiDrawingsController);
 app.use('/api/notificationsOfMDI', notificationOfMDIController);
+app.use('/api/mdiApproval', mdiApprovalRoutes);
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
