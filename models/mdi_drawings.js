@@ -1,32 +1,33 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
+const creationOfMDI = require('./creationOfMDI'); // Import the creationOfMDI model
 
 const MDIDrawings = sequelize.define('MDIDrawings', {
-    id : {
+    id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false
     },
-    mdi_id : {
+    mdi_id: {
         type: DataTypes.STRING(255),
         allowNull: false,
         references: {
-            model: 'creationOfMDI',
+            model: creationOfMDI, // Reference the creationOfMDI model
             key: 'mdi_id'
-        }       
+        }
     },
-    mdi_family_tree_id : {
+    mdi_family_tree_id: {
         type: DataTypes.STRING(255),
         allowNull: false
     },
-    component_assembly_name : {
+    component_assembly_name: {
         type: DataTypes.STRING(255),
-       allowNull: true
+        allowNull: true
     },
     drawing_no: {
         type: DataTypes.STRING(255),
-       allowNull: true
+        allowNull: true
     },
     revision_no: {
         type: DataTypes.STRING(255),
@@ -34,21 +35,21 @@ const MDIDrawings = sequelize.define('MDIDrawings', {
     },
     sheet_size: {
         type: DataTypes.STRING(255),
-       allowNull: true
+        allowNull: true
     },
     no_of_sheets: {
         type: DataTypes.INTEGER,
-       allowNull: true
+        allowNull: true
     },
-    drawing_id : {
+    drawing_id: {
         type: DataTypes.STRING(255),
         allowNull: true
     },
     drawing_name: {
         type: DataTypes.STRING(255),
-       allowNull: true
-    }, 
-    drawing_file_path : {
+        allowNull: true
+    },
+    drawing_file_path: {
         type: DataTypes.STRING(255),
         allowNull: true
     },
@@ -58,7 +59,7 @@ const MDIDrawings = sequelize.define('MDIDrawings', {
     },
     created_by: {
         type: DataTypes.INTEGER,
-       allowNull:true
+        allowNull: true
     },
     updated_at: {
         type: DataTypes.DATE,
@@ -67,16 +68,14 @@ const MDIDrawings = sequelize.define('MDIDrawings', {
     },
     updated_by: {
         type: DataTypes.INTEGER,
-       allowNull:true
+        allowNull: true
     }
 }, {
     sequelize,
     tableName: 'mdi_drawings',
-    timestamps: false, 
+    timestamps: false,
     underscored: true
-}); 
+});
 MDIDrawings.belongsTo(creationOfMDI, { as: 'creationOfMDI', foreignKey: 'mdi_id' });
-
-   
 
 module.exports = MDIDrawings;

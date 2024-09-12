@@ -2,19 +2,14 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
 const creationOfMDI = sequelize.define('creationOfMDI', {
-    id : {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true,
-        autoIncrement: true
-    },
     mdi_id: {
         type: DataTypes.STRING(255),
-        allowNull: true
+        primaryKey: true,
+        allowNull: false
     },
     mdi_family_tree_id: {
         type: DataTypes.STRING(255),
-        allowNull: true
+        allowNull: false
     },
     document_no: {
         type: DataTypes.STRING(255),
@@ -29,7 +24,7 @@ const creationOfMDI = sequelize.define('creationOfMDI', {
         allowNull: true
     },
     material_condition_form: {
-        type: DataTypes.TEXT(1000),
+        type: DataTypes.STRING(255),
         allowNull: true
     },
     material_standard: {
@@ -37,7 +32,7 @@ const creationOfMDI = sequelize.define('creationOfMDI', {
         allowNull: true
     },
     finish_surface_treatment: {
-        type: DataTypes.TEXT(1000),
+        type: DataTypes.STRING(255),
         allowNull: true
     },
     finish_standard: {
@@ -49,7 +44,7 @@ const creationOfMDI = sequelize.define('creationOfMDI', {
         allowNull: true
     },
     material_source: {
-        type: DataTypes.TEXT(1000),
+        type: DataTypes.STRING(255),
         allowNull: true
     },
     life_of_item: {
@@ -64,11 +59,11 @@ const creationOfMDI = sequelize.define('creationOfMDI', {
         type: DataTypes.DATE,
         allowNull: true
     },
-    document_path : {
+    document_path: {
         type: DataTypes.STRING(255),
         allowNull: true
     },
-    document_name  : {
+    document_name: {
         type: DataTypes.STRING(255),
         allowNull: true
     },
@@ -85,11 +80,11 @@ const creationOfMDI = sequelize.define('creationOfMDI', {
     },
     created_by: {
         type: DataTypes.INTEGER,
-        allowNull: true,       
+        allowNull: true
     },
     updated_by: {
         type: DataTypes.INTEGER,
-        allowNull: true,        
+        allowNull: true
     }
 }, {
     sequelize,
