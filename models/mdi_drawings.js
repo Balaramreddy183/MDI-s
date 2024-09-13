@@ -10,7 +10,7 @@ const MDIDrawings = sequelize.define('MDIDrawings', {
         allowNull: false
     },
     mdi_id: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: creationOfMDI, // Reference the creationOfMDI model
@@ -76,6 +76,7 @@ const MDIDrawings = sequelize.define('MDIDrawings', {
     timestamps: false,
     underscored: true
 });
+
 MDIDrawings.belongsTo(creationOfMDI, { as: 'creationOfMDI', foreignKey: 'mdi_id' });
 
 module.exports = MDIDrawings;

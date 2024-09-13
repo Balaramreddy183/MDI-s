@@ -3,9 +3,9 @@ const sequelize = require('../config/database');
 
 const creationOfMDI = sequelize.define('creationOfMDI', {
     mdi_id: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.INTEGER,
         primaryKey: true,
-        allowNull: false
+        autoIncrement: true,
     },
     mdi_family_tree_id: {
         type: DataTypes.STRING(255),

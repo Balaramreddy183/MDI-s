@@ -11,16 +11,15 @@
  */
 const express = require('express');
 const creationofmdiController = require('../controllers/creationOfMDIController');
- const authenticateToken = require('../middleware/auth');
+const authenticateToken = require('../middleware/auth');
 const router = express.Router();
-
 
 /**
  * @swagger
- * /api/department/addDepartment:
+ * /api/mdi/addMDI:
  *   post:
- *     summary: Add a new department
- *     tags: [Department]
+ *     summary: Add a new MDI
+ *     tags: [MDI]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -30,13 +29,40 @@ const router = express.Router();
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *               mdi_family_tree_id:
  *                 type: string
- *               description:
+ *               document_no:
+ *                 type: string
+ *               rev_no:
+ *                 type: string
+ *               quantity_per_assembly:
+ *                 type: integer
+ *               material_condition_form:
+ *                 type: string
+ *               material_standard:
+ *                 type: string
+ *               finish_surface_treatment:
+ *                 type: string
+ *               finish_standard:
+ *                 type: string
+ *               manufacturing_process:
+ *                 type: string
+ *               material_source:
+ *                 type: string
+ *               life_of_item:
+ *                 type: integer
+ *               address:
+ *                 type: string
+ *               date_of_issue:
+ *                 type: string
+ *                 format: date
+ *               document_path:
+ *                 type: string
+ *               document_name:
  *                 type: string
  *     responses:
  *       '201':
- *         description: Department created successfully
+ *         description: MDI created successfully
  *       '500':
  *         description: Internal server error
  */
@@ -44,19 +70,19 @@ router.post('/addMDI', creationofmdiController.addMDI);
 
 /**
  * @swagger
- * /api/department/updateDepartment/{departmentId}:
+ * /api/mdi/updateMDI/{id}:
  *   put:
- *     summary: Update an existing department
- *     tags: [Department]
+ *     summary: Update an existing MDI
+ *     tags: [MDI]
  *     security:
  *       - bearerAuth: []
  *     parameters:
  *       - in: path
- *         name: departmentId
+ *         name: id
  *         schema:
  *           type: integer
  *         required: true
- *         description: ID of the department to update
+ *         description: ID of the MDI to update
  *     requestBody:
  *       required: true
  *       content:
@@ -64,40 +90,67 @@ router.post('/addMDI', creationofmdiController.addMDI);
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *               mdi_family_tree_id:
  *                 type: string
- *               description:
+ *               document_no:
+ *                 type: string
+ *               rev_no:
+ *                 type: string
+ *               quantity_per_assembly:
+ *                 type: integer
+ *               material_condition_form:
+ *                 type: string
+ *               material_standard:
+ *                 type: string
+ *               finish_surface_treatment:
+ *                 type: string
+ *               finish_standard:
+ *                 type: string
+ *               manufacturing_process:
+ *                 type: string
+ *               material_source:
+ *                 type: string
+ *               life_of_item:
+ *                 type: integer
+ *               address:
+ *                 type: string
+ *               date_of_issue:
+ *                 type: string
+ *                 format: date
+ *               document_path:
+ *                 type: string
+ *               document_name:
  *                 type: string
  *     responses:
  *       '200':
- *         description: Department updated successfully
+ *         description: MDI updated successfully
  *       '404':
- *         description: Department not found
+ *         description: MDI not found
  *       '500':
  *         description: Internal server error
  */
-router.put('/updateMDI/:id',  creationofmdiController.updateMDI);
+router.put('/updateMDI/:id', creationofmdiController.updateMDI);
 
 /**
  * @swagger
- * /api/department/deleteDepartment/{departmentId}:
+ * /api/mdi/deleteMDI/{id}:
  *   delete:
- *     summary: Delete an existing department
- *     tags: [Department]
+ *     summary: Delete an existing MDI
+ *     tags: [MDI]
  *     security:
  *       - bearerAuth: []
  *     parameters:
  *       - in: path
- *         name: departmentId
+ *         name: id
  *         schema:
  *           type: integer
  *         required: true
- *         description: ID of the department to delete
+ *         description: ID of the MDI to delete
  *     responses:
  *       '200':
- *         description: Department deleted successfully
+ *         description: MDI deleted successfully
  *       '404':
- *         description: Department not found
+ *         description: MDI not found
  *       '500':
  *         description: Internal server error
  */
@@ -105,33 +158,18 @@ router.delete('/deleteMDI/:id', creationofmdiController.deleteMDI);
 
 /**
  * @swagger
- * /api/department/getAllDepartments:
+ * /api/mdi/getAllMDIs:
  *   get:
- *     summary: Get all departments
- *     tags: [Department]
+ *     summary: Get all MDIs
+ *     tags: [MDI]
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       '200':
- *         description: Successfully retrieved departments
+ *         description: Successfully retrieved MDIs
  *       '500':
  *         description: Internal server error
  */
 router.get('/getAllMDIs', creationofmdiController.getAllMDIs);
-
-/**
- * @swagger
- * /api/department/getAllDepartmentsForRegistration:
- *   get:
- *     summary: Get all departments For Registration
- *     tags: [Department]
- *     responses:
- *       '200':
- *         description: Successfully retrieved departments
- *       '500':
- *         description: Internal server error
- */
-//router.get('/getAllDepartmentsForRegistration', departmentController.getAllDepartmentsForRegistration);
-
 
 module.exports = router;
