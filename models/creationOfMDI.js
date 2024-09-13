@@ -1,11 +1,12 @@
 const { DataTypes } = require('sequelize');
+const { v4: uuidv4 } = require('uuid');
 const sequelize = require('../config/database');
 
 const creationOfMDI = sequelize.define('creationOfMDI', {
     mdi_id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
+        defaultValue: uuidv4,
         primaryKey: true,
-        autoIncrement: true,
     },
     mdi_family_tree_id: {
         type: DataTypes.STRING(255),

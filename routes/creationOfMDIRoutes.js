@@ -55,7 +55,7 @@ const router = express.Router();
  *                 type: string
  *               date_of_issue:
  *                 type: string
- *                 format: date
+ *                 format: date-time
  *               document_path:
  *                 type: string
  *               document_name:
@@ -70,6 +70,22 @@ router.post('/addMDI', creationofmdiController.addMDI);
 
 /**
  * @swagger
+ * /api/mdi/getAllMDIs:
+ *   get:
+ *     summary: Get all MDIs
+ *     tags: [MDI]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       '200':
+ *         description: Successfully retrieved MDIs
+ *       '500':
+ *         description: Internal server error
+ */
+router.get('/getAllMDIs', creationofmdiController.getAllMDIs);
+
+/**
+ * @swagger
  * /api/mdi/updateMDI/{id}:
  *   put:
  *     summary: Update an existing MDI
@@ -80,7 +96,7 @@ router.post('/addMDI', creationofmdiController.addMDI);
  *       - in: path
  *         name: id
  *         schema:
- *           type: integer
+ *           type: string
  *         required: true
  *         description: ID of the MDI to update
  *     requestBody:
@@ -116,7 +132,7 @@ router.post('/addMDI', creationofmdiController.addMDI);
  *                 type: string
  *               date_of_issue:
  *                 type: string
- *                 format: date
+ *                 format: date-time
  *               document_path:
  *                 type: string
  *               document_name:
@@ -143,7 +159,7 @@ router.put('/updateMDI/:id', creationofmdiController.updateMDI);
  *       - in: path
  *         name: id
  *         schema:
- *           type: integer
+ *           type: string
  *         required: true
  *         description: ID of the MDI to delete
  *     responses:
@@ -155,21 +171,5 @@ router.put('/updateMDI/:id', creationofmdiController.updateMDI);
  *         description: Internal server error
  */
 router.delete('/deleteMDI/:id', creationofmdiController.deleteMDI);
-
-/**
- * @swagger
- * /api/mdi/getAllMDIs:
- *   get:
- *     summary: Get all MDIs
- *     tags: [MDI]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       '200':
- *         description: Successfully retrieved MDIs
- *       '500':
- *         description: Internal server error
- */
-router.get('/getAllMDIs', creationofmdiController.getAllMDIs);
 
 module.exports = router;
