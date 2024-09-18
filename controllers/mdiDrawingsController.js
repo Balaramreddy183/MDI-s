@@ -1,32 +1,55 @@
 const mdiDrawings = require('../models/mdi_drawings');
 const { Sequelize, Op } = require('sequelize');
+const upload = require('../middleware/upload');
 
 async function mdiIdExists(mdi_id) {
     const mdiIdExisting = await mdiDrawings.findOne({
-        where:  {
+        where: {
             mdi_id
         }
     });
     return mdiIdExisting !== null;
 }
-exports.addMDIDrawings = async (req, res) => {
-    const { mdi_id,mdi_family_tree_id, component_assembly_name, drawing_no, revision_no, sheet_size, no_of_sheets,drawing_id,drawing_name,drawing_file_path} = req.body;
-    const createdBy = req.userId;
-    let response = {};
-    try {
-        if (await mdiIdExists(mdi_id)) {
-            response = { status: 0, message: "mdi_id is already exists" };
-        } else {
-            const creatingMDI = await mdiDrawings.create({  mdi_id,mdi_family_tree_id, component_assembly_name, drawing_no, revision_no, sheet_size, no_of_sheets,drawing_id,drawing_name,drawing_file_path, created_by:createdBy });
-            response = { status: 1, message: "MDI is created successfully", data: creatingMDI };
+
+exports.addMDIDrawings = async(req, res) => {
+    upload.single('drawing_file')(req, res, async(err) => {
+        if (err) {
+            return res.status(400).json({ status: 0, message: err.message });
         }
-    } catch (error) {
-        console.error("Error creating MDI : ", error);
-        response = { status: 0, message: "Error creating MDI ", error: error.message };
-    }
-    res.json(response);
+
+        const { mdi_id, mdi_family_tree_id, component_assembly_name, drawing_no, revision_no, sheet_size, no_of_sheets, drawing_id, drawing_name } = req.body;
+        const createdBy = req.userId;
+        const drawing_file_path = req.file ? req.file.path : null;
+        let response = {};
+
+        try {
+            if (await mdiIdExists(mdi_id)) {
+                response = { status: 0, message: "mdi_id already exists" };
+            } else {
+                const creatingMDI = await mdiDrawings.create({
+                    mdi_id,
+                    mdi_family_tree_id,
+                    component_assembly_name,
+                    drawing_no,
+                    revision_no,
+                    sheet_size,
+                    no_of_sheets,
+                    drawing_id,
+                    drawing_name,
+                    drawing_file_path,
+                    created_by: createdBy
+                });
+                response = { status: 1, message: "MDI created successfully", data: creatingMDI };
+            }
+        } catch (error) {
+            console.error("Error creating MDI: ", error);
+            response = { status: 0, message: "Error creating MDI", error: error.message };
+        }
+        res.json(response);
+    });
 };
-exports.getAllMDIDrawings = async (req, res) => {
+
+exports.getAllMDIDrawings = async(req, res) => {
     try {
         const MDIDrawings = await mdiDrawings.findAll({});
 
@@ -36,9 +59,10 @@ exports.getAllMDIDrawings = async (req, res) => {
         res.json({ status: 0, message: 'Error fetching MDIDrawings', error: error.message });
     }
 };
-exports.updateMDIDrawings = async (req, res) => {
+
+exports.updateMDIDrawings = async(req, res) => {
     const { id } = req.params;
-    const { mdi_id,mdi_family_tree_id, component_assembly_name, drawing_no, revision_no, sheet_size, no_of_sheets,drawing_id,drawing_name,drawing_file_path} = req.body;
+    const { mdi_id, mdi_family_tree_id, component_assembly_name, drawing_no, revision_no, sheet_size, no_of_sheets, drawing_id, drawing_name, drawing_file_path } = req.body;
     let response = {};
 
     try {
@@ -50,8 +74,8 @@ exports.updateMDIDrawings = async (req, res) => {
                 response = { status: 0, message: "MDIDrawings with the same  id already exists" };
             } else {
                 const updatedBy = req.userId;
-                await MDIDrawings.update({  mdi_id,mdi_family_tree_id, component_assembly_name, drawing_no, revision_no, sheet_size, no_of_sheets,drawing_id,drawing_name,drawing_file_path , updated_by:updatedBy });
-                response = { status: 1, message: "MDIDrawings updated successfully",data:MDIDrawings };
+                await MDIDrawings.update({ mdi_id, mdi_family_tree_id, component_assembly_name, drawing_no, revision_no, sheet_size, no_of_sheets, drawing_id, drawing_name, drawing_file_path, updated_by: updatedBy });
+                response = { status: 1, message: "MDIDrawings updated successfully", data: MDIDrawings };
             }
         }
     } catch (error) {
@@ -60,7 +84,8 @@ exports.updateMDIDrawings = async (req, res) => {
     }
     res.json(response);
 };
-exports.deleteMDIDrawings = async (req, res) => {
+
+exports.deleteMDIDrawings = async(req, res) => {
     const { id } = req.params;
     let response = {};
     try {
@@ -69,7 +94,7 @@ exports.deleteMDIDrawings = async (req, res) => {
             response = { status: 0, message: "MDIDrawing not found" };
         } else {
             await deleteMDIDrawing.destroy();
-            response = { status: 1, message: "MDIDrawing deleted successfully",data:deleteMDIDrawing };
+            response = { status: 1, message: "MDIDrawing deleted successfully", data: deleteMDIDrawing };
         }
     } catch (error) {
         console.error("Error deleting MDIDrawing: ", error);

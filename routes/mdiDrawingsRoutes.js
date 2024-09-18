@@ -12,6 +12,7 @@
 const express = require('express');
 const mdiDrawingsController = require('../controllers/mdiDrawingsController');
 const authenticateToken = require('../middleware/auth');
+const upload = require('../middleware/upload');
 const router = express.Router();
 
 
@@ -76,7 +77,7 @@ router.post('/addMDIDrawings', mdiDrawingsController.addMDIDrawings);
  *       '500':
  *         description: Internal server error
  */
-router.put('/updateMDIDrawings/:id',  mdiDrawingsController.updateMDIDrawings);
+router.put('/updateMDIDrawings/:id', mdiDrawingsController.updateMDIDrawings);
 
 /**
  * @swagger
